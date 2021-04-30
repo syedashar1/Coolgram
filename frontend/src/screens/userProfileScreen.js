@@ -1,0 +1,161 @@
+import React, { Component } from 'react'
+import { connect } from "react-redux";
+import {userDetails } from "../actions/userActions"
+import FireGram from "../components/FireGram"
+import PostsMongo from '../components/PostsMongo';
+import ProfilePic from "../components/ProfilePic"
+import { Col, Container, Row } from 'react-bootstrap';
+import MapLocation from '../components/MapLocation';
+import Modal from "react-modal"
+import Zoom from "react-reveal/Zoom"
+import axios from 'axios';
+
+
+
+
+class userProfileScreen extends Component {
+
+
+          constructor(){
+                super();
+                this.state = { 
+                
+                        openModal : false ,
+                        message : ''
+
+                }
+        }
+
+
+        componentDidMount(){
+
+                if(this.props.match.params.id){
+                        this.props.userDetails(this.props.match.params.id)
+
+                }
+                else{
+                        this.props.userDetails()
+                }
+
+                
+        }
+
+
+        submitHandler = (e) => {
+
+                e.preventDefault()
+                const {user , userInfo } = this.props
+                console.log(this.state.message);
+                console.log(userInfo._id);
+                console.log(user._id);
+
+
+                axios.put(`/api/chat/singletext/${userInfo._id}`, {text : this.state.message , recipients: [user._id] }  );
+                this.setState({openModal:false})
+
+        }
+
+     
+        
+        render() {
+
+
+                const {user , userInfo } = this.props
+                const {openModal} = this.state
+
+return (
+        <div>
+                <h1>Profile Screen</h1>
+
+                {user && <ProfilePic/> }
+                
+                          
+                          <div className="center">
+                         <div>
+
+                        {user && 
+                        
+                        <div>
+                        <p style={{textAlign:'center' , fontSize : '50px', marginTop:'80px'}} >{user.name}</p>
+                        <p style={{textAlign:'center' , fontSize : '50px', marginTop:'80px'}} >{user.email}</p>
+                        <p style={{textAlign:'center' , fontSize : '50px', marginTop:'80px'}} >{user.age}</p>
+                        <p style={{textAlign:'center' , fontSize : '50px', marginTop:'80px'}} >{user.country}</p>
+                        <p style={{textAlign:'center' , fontSize : '50px', marginTop:'80px'}} >{user.bio}</p>
+                        <p style={{textAlign:'center' , fontSize : '50px', marginTop:'80px'}} >{user.posts.length} Posts </p>
+                        
+                        {user._id !== userInfo._id && <button onClick={()=>this.setState({openModal : true})} >Message</button> }
+                        
+                        </div>
+
+        
+                        
+                        }
+                        
+                        
+                                
+                       
+                        </div> 
+
+
+
+                </div>
+
+
+                { openModal && (
+                <Modal isOpen ={true} onRequestClose = { ()=>this.setState({openModal:false}) } >
+                                                <Zoom>
+                                                <form className="form upgap text-center" onSubmit={this.submitHandler} >
+                                                <textarea id="description" rows="5" cols="50" type="text" required="true"
+                                                placeholder="Enter family description" onChange={(e) => this.setState({ message : e.target.value})}
+                                                ></textarea>
+                                                <button>send</button>
+                                                </form>
+                                                </Zoom>
+
+                                        </Modal>
+                                )}
+
+
+
+
+
+
+
+
+                {user && <MapLocation/> }
+
+                <Container>
+                
+                <Row>
+                <Col>
+                {user && <FireGram/> }
+                </Col>
+                
+                <Col>
+                {user && <PostsMongo history={this.props.history} /> }
+                </Col>
+                </Row>
+
+                </Container>
+                
+                
+                        
+        
+        </div>
+                )
+        }
+}
+
+
+export default connect(
+        
+        (state) => ({ 
+                userInfo : state.userSignin.userInfo ,
+                user : state.getDetails.user
+        }),
+        {
+                userDetails
+          
+        } 
+      
+)(userProfileScreen);
