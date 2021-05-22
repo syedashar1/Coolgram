@@ -1,9 +1,12 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useContacts } from './ContactsProvider';
 import { useSocket } from './SocketProvider';
 import Axios from 'axios'
+import { POP_NOTIFICATION } from '../../types/chatTypes';
+import { popChatNotification } from '../../actions/chatActions';
+import { newNotification } from '../../actions/likeCommenentActions';
 
 
 
@@ -14,9 +17,13 @@ export function useConversations() {
 }
 
 export function ConversationsProvider({ id, children }) {
+
   const [conversations, setConversations] = useLocalStorage('conversations', [])
   const [selectedConversationIndex, setSelectedConversationIndex] = useState(0)
   // const { contacts } = useContacts()
+  const dispatch = useDispatch();
+
+  
   const ListForChat = useSelector((state) => state.ListForChat);
   const { users : users } = ListForChat
   const socket = useSocket()
@@ -28,6 +35,10 @@ export function ConversationsProvider({ id, children }) {
   }
 
   const addMessageToConversation = useCallback(({ recipients, text, sender }) => {
+
+
+    if(id != sender) { dispatch( popChatNotification(sender) ) }
+
     setConversations(prevConversations => {
       let madeChange = false
       const newMessage = { sender, text }
@@ -54,23 +65,32 @@ export function ConversationsProvider({ id, children }) {
     })
   }, [setConversations])
 
+
+  const receiveNotification = () => {
+    dispatch(newNotification() )
+    console.log('sending...');
+  }
+
+
+
   useEffect(() => {
     if (socket == null) return
 
     socket.on('receive-message', addMessageToConversation)
+    socket.on('receive-notification', receiveNotification )
 
-    return () => socket.off('receive-message')
-  }, [socket, addMessageToConversation])
+    return () =>{ socket.off('receive-message');socket.off('receive-notification');}
+  }, [socket, addMessageToConversation , receiveNotification ])
 
   async function sendMessage(recipients, text) {
     socket.emit('send-message', { recipients, text })
 
     addMessageToConversation({ recipients, text, sender: id })
-    console.log('this is run');
     await Axios.put(`/api/chat/msgtosend/${id}`, { text, recipients , sender : id });
 
 
   }
+
 
   const formattedConversations = conversations.map((conversation, index) => {
     const recipients = conversation.recipients.map(recipient => {

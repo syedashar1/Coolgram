@@ -17,7 +17,7 @@ function App() {
 
         
         return (
-          <div className="AppFireGram">
+          <div>
 
             {user._id === userInfo._id && <UploadForm />}
                 

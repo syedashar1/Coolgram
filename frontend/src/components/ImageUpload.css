@@ -64,10 +64,10 @@
 
 /* image grid styles */
 .img-grid{
-  margin: 20px auto;
+  margin: 0px auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 40px;
+  grid-gap: 5px;
 }
 .img-wrap{
   overflow: hidden;
@@ -177,7 +177,6 @@ header {
 }
 main {
   grid-area: main;
-  padding: 1rem;
 }
 footer {
   grid-area: footer;
@@ -418,6 +417,7 @@ img.medium {
 .dropdown {
   display: inline-block;
   position: relative;
+  cursor: pointer;
 }
 
 /* Checkout Steps */
@@ -701,3 +701,72 @@ main {
   overflow: visible;
 }
 
+
+
+
+.dropdown-content-for-post {
+  position: absolute;
+  display: none;
+  right: 0;
+  z-index: 1;
+  background-color:#f6f6f6;
+  padding: 10px;
+  text-align: center;
+
+}
+
+.dropdown-content-for-post li{
+  cursor: pointer;
+}
+.dropdown-content-for-post li:hover{
+  text-decoration: underline;
+}
+
+.dropdown:hover .dropdown-content-for-post {
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container-ofouter-image {
+  position: relative;
+}
+
+.image-to-hover {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle-text {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.container-ofouter-image:hover .image-to-hover {
+  opacity: 0.3;
+}
+
+.container-ofouter-image:hover .middle-text {
+  opacity: 1;
+}

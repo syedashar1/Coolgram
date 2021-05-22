@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema(
 
         password:{ type:String , required:true},
 
+        resetToken:String,
+        expireToken:Date,
+
         age : {type : Number } ,
 
         country : { type : String , required : true } ,
@@ -45,9 +48,23 @@ const userSchema = new mongoose.Schema(
                 pic : {type : String} , 
                 caption : {type : String} , 
                 likes : [String] , 
-                createdAt  : { type : Date, default: Date.now } 
+                createdAt  : { type : Date, default: Date.now } ,
 
-        }] , 
+
+                comments : [{
+                        id : {type : String} ,
+                        comment : {type : String} ,
+                }] 
+
+        }] ,
+        
+        
+        savedPosts : [{
+                postedBy : { type : String} ,
+                postId : { type : String} ,
+        }] ,
+
+
 
 
         decants : [
@@ -66,20 +83,25 @@ const userSchema = new mongoose.Schema(
 
 
         forChat : [String] ,
+
+        newMessages:[String] ,
         
         conversations : [{
                 recipients : [String] , 
                 messages : [
-                        {sender : String  ,
+                        {sender : String ,
                         text : String }  
                 ]
         }], 
+        
+        newNotifications : {type : Number , default : 0} ,
 
         notification : [{
                 type : { type : String } ,
-                data : { type : String }
+                by : { type : String } ,
+                post : { type : String } ,
+                comment : { type : String } ,
         }]
-
 
 
 } ,

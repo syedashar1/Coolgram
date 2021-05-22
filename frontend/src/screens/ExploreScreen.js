@@ -1,31 +1,24 @@
 import React, { useEffect , useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { listUsers } from '../actions/userActions' ;
-import { Accordion, Card, Carousel, Col, Container, Row , Image } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import SinglePost from '../components/SinglePost';
-import Navbar from '../components/Navbar';
-import { SocketProvider } from '../chat/contexts/SocketProvider';
-import { ContactsProvider } from '../chat/contexts/ContactsProvider';
-import { ConversationsProvider } from '../chat/contexts/ConversationsProvider';
-import Dashboard from '../chat/components/Dashboard';
 import ChatApp from '../chat/components/ChatApp';
+import Modal from '../components/Modal';
+import { SocketProvider } from '../chat/contexts/SocketProvider';
+import { motion } from 'framer-motion';
 
-export default function NewsFeedScreen() {
 
-        const userList = useSelector((state) => state.userList);
-        // const { loading, error, users } = userList;
+export default function ExploreScreen() {
 
- 
+
         const userSignin = useSelector((state) => state.userSignin);
         const { userInfo } = userSignin;
-
+        const [selectedImg, setSelectedImg] = useState(null);
+        const [postBy, setpostBy] = useState(null)
         const dispatch = useDispatch();
         const history = useHistory()
-
         const [state ,setState ] = useState([])
         const [page ,setPage ] = useState(1) 
         const [loading, setloading] = useState(false)
@@ -34,7 +27,7 @@ export default function NewsFeedScreen() {
         useEffect(() => {
                 
                 setloading(true)
-                axios.get(`/api/newsfeed?pageNumber=${page}`)
+                axios.get(`/api/newsfeed/explore?pageNumber=${page}`)
                 .then(res => {
                         console.log(res);
                         setState([...state , ...res.data]);
@@ -49,48 +42,61 @@ export default function NewsFeedScreen() {
 
 
 
-
         const scrollToEnd = () => {
                 setPage(page + 1)
 
         }
 
 
-        
-        
-
 
         return (
-                <div> 
-                        
-                        <button onClick={()=>console.log(state)} >click</button>
-                        <div>
+                <div>
+
                         <InfiniteScroll
                         dataLength={state.length}
                         next={scrollToEnd}
                         hasMore={true}
                         style={{overflow:'visible'}}
                         >
-                
+
+
                         { userInfo && userInfo._id && state.length > 0 && <div>
 
                                 <ChatApp show={true} /> 
-
                                 <SocketProvider id={userInfo._id }>
-                                        {state.reverse().map( x => 
-                                        <SinglePost id={x.postedBy} postid={x.postId} />)
-                                        }
+                                
+
+
+                                <div className="img-grid">
+                                {state.map(x => (
+                                <motion.div className="img-wrap container-ofouter-image" key={x.postID}  layout
+                                whileHover={{ opacity: 1 }}s
+                                onClick={() => {setSelectedImg(x.postID) ; setpostBy(x.postedBy) }}
+                                >
+                                <img src={x.pic} alt="uploaded pic" className='image-to-hover'/>
+                                <div className="middle-text">
+                                <p>{x.totalLikes}</p>
+                                </div>  
+                                </motion.div>
+                                ))}
+                                </div>
+                                { selectedImg && (
+                                <Modal selectedImg={selectedImg} setSelectedImg={setSelectedImg} postBy={postBy} />
+                                )}
+
+
                                 </SocketProvider>   
 
                         </div>
                         
                         
                         }
+
+
+
                         </InfiniteScroll>
-
-</div>
-                        <h1>{loading ? <p> Loading... </p> : <h1> the end </h1>  }</h1>
-
+                
+                        
                 </div>
         )
 }

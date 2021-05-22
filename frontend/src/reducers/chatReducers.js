@@ -1,4 +1,4 @@
-import { LIST_FORCHAT_FAIL, LIST_FORCHAT_REQUEST, LIST_FORCHAT_SUCCESS } from '../types/chatTypes'
+import { LIST_FORCHAT_FAIL, LIST_FORCHAT_REQUEST, LIST_FORCHAT_SUCCESS, POP_NOTIFICATION, UN_POP_NOTIFICATION } from '../types/chatTypes'
 
 
 
@@ -15,4 +15,14 @@ export const ListForChatReducer = (state = { loading: true }, action) => {
           default:
             return state;
         }
-      };
+};
+
+export const NotificationReducer = (state = {}, action) => {
+  console.log(state);
+  switch (action.type) {
+    case POP_NOTIFICATION:
+      return { senders : action.payload };
+    default:
+      return state;
+  }
+};

@@ -9,6 +9,8 @@ import MapLocation from '../components/MapLocation';
 import Modal from "react-modal"
 import Zoom from "react-reveal/Zoom"
 import axios from 'axios';
+import ChatApp from '../chat/components/ChatApp';
+import SavedPosts from '../components/SavedPosts';
 
 
 
@@ -41,6 +43,12 @@ class userProfileScreen extends Component {
         }
 
 
+        componentDidUpdate(){
+                console.log('changed');
+        }
+
+
+
         submitHandler = (e) => {
 
                 e.preventDefault()
@@ -66,7 +74,7 @@ class userProfileScreen extends Component {
 return (
         <div>
                 <h1>Profile Screen</h1>
-
+                {userInfo && userInfo._id && <ChatApp show={true} />}
                 {user && <ProfilePic/> }
                 
                           
@@ -122,19 +130,21 @@ return (
 
 
 
-                {user && <MapLocation/> }
+                {/* {user && <MapLocation/> } */}
 
                 <Container>
-                
-                <Row>
-                <Col>
                 {user && <FireGram/> }
-                </Col>
+                <Row>
                 
                 <Col>
-                {user && <PostsMongo history={this.props.history} /> }
+                {/* {user && <PostsMongo/> } */}
                 </Col>
                 </Row>
+
+
+                {user && <SavedPosts/> }
+
+
 
                 </Container>
                 

@@ -34,7 +34,8 @@ const useStorage = (file , caption) => {
     }, async () => {
       const url = await storageRef.getDownloadURL();
       const createdAt = timestamp();
-      await collectionRef.add({ url, createdAt , caption });
+      const x = await collectionRef.add({ url, createdAt , caption });
+      console.log(x);
       dispatch( createPost(url , caption ) )
       setUrl(url);
     });

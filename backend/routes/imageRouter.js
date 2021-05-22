@@ -4,6 +4,7 @@ import User from '../models/userModel.js'
 import bcrypt from 'bcrypt'
 import { generateToken, isAuth } from '../utils.js'
 import Seller from '../models/sellerModel.js';
+import NewsFeed from '../models/newsFeedPostsModel.js';
 
 
 const imageRouter = express.Router();
@@ -38,8 +39,18 @@ imageRouter.put( '/createpost', isAuth , expressAsyncHandler(async (req, res) =>
           
           user.posts.push({pic : req.body.url , caption : req.body.caption })
           await user.save()
+
+          const postId = user.posts[user.posts.length - 1]._id
+          console.log(postId);
+
+          const newPost = new NewsFeed({ postedBy : req.user._id , postId });
+          const createdUser = await newPost.save();
+
+
+          
           console.log({message : 'New Post Created!'});
           res.send({message : 'New Post Created!'})
+
           }
         
         else{

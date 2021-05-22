@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import ProgressBarProfilePic from './ProgressBarProfilePic';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import imageCompression from 'browser-image-compression';
+import 'globalthis/auto';
 
 
 const UploadFormProfilePic = () => {
@@ -9,12 +11,30 @@ const UploadFormProfilePic = () => {
 
   const types = ['image/png', 'image/jpeg'];
 
-  const handleChange = (e) => {
-    let selected = e.target.files[0];
+  const options = {
+    maxSizeMB: 0.09,
+    maxWidthOrHeight: 720,
+    useWebWorker: true
+  }
+
+
+
+  const handleChange  = async (e) => {
+    var selected = e.target.files[0];
 
     if (selected && types.includes(selected.type)) {
-      setFile(selected);
+      
+      
+      let output;
+      imageCompression(selected, options).then(x => {
+      output = x;
+      setFile(output);
       setError('');
+    });
+
+
+
+      
     } else {
       setFile(null);
       setError('Please select an image file (png or jpg)');

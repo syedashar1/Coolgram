@@ -44,7 +44,7 @@ const ImageGrid = ({ setSelectedImg }) => {
         
 
   return (
-    <div className="text-center" style={{maxWidth:'300px'}} >
+    <div className="text-center" style={{maxWidth:'230px'}} >
         
         
 
@@ -56,7 +56,7 @@ const ImageGrid = ({ setSelectedImg }) => {
         >
           <motion.img 
           src={ docs && docs[0] ? docs[0].url :
-        "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+        ""
         } 
           alt="uploaded pic"
             initial={{ opacity: 0 }}

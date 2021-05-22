@@ -51,7 +51,8 @@ render() {
                 <div>
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" placeholder="Enter password" required onChange={(e) => this.setState({ password : e.target.value})}></input>
-                { this.props.signinError && (<>incorrect email or password</>)}
+                { this.props.signinLoading &&  <p>Siging in...</p> }
+                { this.props.signinError &&  this.props.signinError }
                 </div>
                 <div className='row center'>
                 <label />
@@ -84,7 +85,8 @@ export default connect(
         (state) => ({ 
 
                 userInfo : state.userSignin.userInfo ,
-                signinError : state.userSignin.error
+                signinError : state.userSignin.error ,
+                signinLoading : state.userSignin.loading ,
         
         
         }),

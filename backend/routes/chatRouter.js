@@ -14,10 +14,10 @@ const chatRouter = express.Router();
 
 chatRouter.get( '/forchat/:id', expressAsyncHandler(async (req, res) => {
   
-        console.log('listssss of chat ');
+        // console.log('listssss of chat ');
       
         const user = await User.findById(req.params.id);
-        const users = await User.find({  '_id': { $in: user.forChat} });
+        const users = await User.find({  '_id': { $in: user.forChat} } , '_id name profilePic' );
         if (users){
           res.send(users)
         }
@@ -34,9 +34,9 @@ chatRouter.get( '/forchat/:id', expressAsyncHandler(async (req, res) => {
 
 chatRouter.put( '/msgtosend/:id' , expressAsyncHandler(async (req, res) => {
         
-        console.log('see meeeee');
-        console.log(req.body)
-        console.log(req.params.id);
+        // console.log('see meeeee');
+        // console.log(req.body)
+        // console.log(req.params.id);
 
 
         //user req.params.id
@@ -49,10 +49,10 @@ chatRouter.put( '/msgtosend/:id' , expressAsyncHandler(async (req, res) => {
 
 
         for(var i = 0 ; i < user.conversations.length ; i++ ){
-          console.log(i);
+          // console.log(i);
           console.log(user.conversations[i].recipients[0]);
           if (user.conversations[i].recipients[0] === req.params.id ) {
-            console.log('found it !  at' , i );
+            // console.log('found it !  at' , i );
             break
           }
         }
@@ -64,10 +64,10 @@ chatRouter.put( '/msgtosend/:id' , expressAsyncHandler(async (req, res) => {
            
 
             for(var i = 0 ; i < user2.conversations.length ; i++ ){
-              console.log(user2.conversations[i].recipients[0]);
+              // console.log(user2.conversations[i].recipients[0]);
               if (user2.conversations[i].recipients[0] === req.body.recipients[0] ) {
-                console.log('found it !  for user 2' , i );
-                console.log(user2.conversations[i].messages);
+                // console.log('found it !  for user 2' , i );
+                // console.log(user2.conversations[i].messages);
                 break
               }
             }
@@ -83,10 +83,10 @@ chatRouter.put( '/msgtosend/:id' , expressAsyncHandler(async (req, res) => {
 
 chatRouter.get( '/getconversations/:id', expressAsyncHandler(async (req, res) => {
   
-  console.log('getting conversations');
+  // console.log('getting conversations');
 
   const user = await User.findById(req.params.id);
-  console.log(user.conversations);
+  // console.log(user.conversations);
   if (user.conversations){
     res.send(user.conversations)
   }
@@ -99,14 +99,41 @@ chatRouter.get( '/getconversations/:id', expressAsyncHandler(async (req, res) =>
 
 
 
+chatRouter.get( '/notification/:id', isAuth ,expressAsyncHandler(async (req, res) => {
+
+  const user = await User.findById(req.user._id);
+
+  if (user.newMessages.indexOf(req.params.id) == -1 && req.params.id !== user._id ){
+    
+    user.newMessages.push(req.params.id) 
+    await user.save()
+    res.send(user.newMessages)
+
+  }
+  else{
+    res.send(user.newMessages)
+  }
+
+})
+);
+
+
+chatRouter.get( '/removenotification/:id', isAuth ,expressAsyncHandler(async (req, res) => {
+
+  console.log('removing notification');
+  const user = await User.findById(req.user._id);
+  user.newMessages = user.newMessages.filter(e=>e != req.params.id )
+  await user.save()
+  res.send(user.newMessages)
+
+
+})
+);
+
+
+
 chatRouter.put( '/singletext/:id', expressAsyncHandler(async (req, res) => {
   
-  
-
-
-
-
-
 
   const user = await User.findById(req.body.recipients[0]);
   const user2 = await User.findById(req.params.id);
@@ -115,10 +142,10 @@ chatRouter.put( '/singletext/:id', expressAsyncHandler(async (req, res) => {
   var found2 = false
 
   for(var i = 0 ; i < user.conversations.length ; i++ ){
-    console.log(i);
-    console.log(user.conversations[i].recipients[0]);
+    // console.log(i);
+    // console.log(user.conversations[i].recipients[0]);
     if (user.conversations[i].recipients[0] === req.params.id ) {
-      console.log('found it !  at' , i );
+      // console.log('found it !  at' , i );
       found1 = true
       break
     }
@@ -131,10 +158,10 @@ chatRouter.put( '/singletext/:id', expressAsyncHandler(async (req, res) => {
      
 
       for(var i = 0 ; i < user2.conversations.length ; i++ ){
-        console.log(user2.conversations[i].recipients[0]);
+        // console.log(user2.conversations[i].recipients[0]);
         if (user2.conversations[i].recipients[0] === req.body.recipients[0] ) {
-          console.log('found it !  for user 2' , i );
-          console.log(user2.conversations[i].messages);
+          // console.log('found it !  for user 2' , i );
+          // console.log(user2.conversations[i].messages);
           found2 = true
           break
         }
@@ -163,7 +190,7 @@ chatRouter.put( '/singletext/:id', expressAsyncHandler(async (req, res) => {
   try {
     await user.save()
     await user2.save()
-    console.log('saved');
+    // console.log('saved');
   } catch (error) {
     console.log(error.message);
   }

@@ -1,47 +1,11 @@
 import React, { Component } from 'react'
-import Login from './Login'
-import useLocalStorage from '../hooks/useLocalStorage';
 import Dashboard from './Dashboard'
 import { ContactsProvider } from '../contexts/ContactsProvider'
 import { ConversationsProvider } from '../contexts/ConversationsProvider';
 import { SocketProvider } from '../contexts/SocketProvider';
-import { useDispatch, useSelector } from 'react-redux';
 import { avaliableForChat } from '../../actions/chatActions';
-import { useEffect } from 'react';
 import { connect } from "react-redux";
 import Axios from 'axios';
-
-
-// function App(props) {
-//   // const [id, setId] = useLocalStorage('id')
-//   const userSignin = useSelector((state) => state.userSignin);
-//   const {  userInfo : userInfo } = userSignin;
-//   useEffect(() => {  
-//     if (!userInfo._id) {  props.history.push('/');
-
-
-  
-//   }}) 
-//   const dashboard = (
-//     <SocketProvider id={userInfo._id }>
-//       <ContactsProvider>
-//         <ConversationsProvider id={userInfo._id}>
-//           <Dashboard id={userInfo._id} />
-//         </ConversationsProvider>
-//       </ContactsProvider>
-//     </SocketProvider>
-//   )
-
-//   return (
-//     dashboard
-//   )
-// }
-
-// export default App;
-
-
-
-
 
 
 class App extends Component {
@@ -81,7 +45,7 @@ class App extends Component {
 
   render() {
     const conv = JSON.parse(localStorage.getItem('whatsapp-clone-conversations'))
-    if (!this.props.userInfo) { this.props.history.push('/') }
+    if (!this.props.userInfo || !this.props.userInfo._id ) { this.props.history.push('/signin') ; return }
     const {userInfo} = this.props
     const dashboard = (
       <SocketProvider id={userInfo._id }>
@@ -96,6 +60,7 @@ class App extends Component {
     
 
     return (
+      this.props.users && this.state.convPresent && this.props.show ? <div  style={{display:'none'}} >{dashboard}</div> : 
       this.props.users && this.state.convPresent ? dashboard : 
       <div className='row center upgap' > <div className='cm-spinner' ></div> </div>
     )

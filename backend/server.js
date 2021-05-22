@@ -6,6 +6,7 @@ import imageRouter from './routes/imageRouter.js';
 import fragranceRouter from './routes/fragranceRouter.js';
 import chatRouter from './routes/chatRouter.js';
 import likeCommentRouter from './routes/likeCommentRouter.js';
+import postFeedRouter from './routes/postFeedRouter.js';
 
 
 
@@ -29,6 +30,7 @@ app.use('/api/users', imageRouter);
 app.use('/api/fragrance', fragranceRouter);
 app.use('/api/chat', chatRouter);
 app.use('/api/likecomment', likeCommentRouter);
+app.use('/api/newsfeed', postFeedRouter);
 
 
 

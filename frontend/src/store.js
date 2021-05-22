@@ -1,8 +1,8 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { ListForChatReducer } from './reducers/chatReducers';
+import { ListForChatReducer, NotificationReducer } from './reducers/chatReducers';
 import { createPostReducer, profilePicReducer } from './reducers/imagesReducers';
-import { getLikesReducer, likeReducer } from './reducers/likeCommentReducer';
+import { getLikesReducer, likeReducer , commentReducer, newNotificationReducer} from './reducers/likeCommentReducer';
 import {  userRegisterReducer, userSigninReducer , getDetailsReducer, userListReducer } from './reducers/userReducers';
 
 
@@ -23,11 +23,14 @@ const reducer = combineReducers({
 
 
   ListForChat : ListForChatReducer ,
+  Notification : NotificationReducer ,
 
 
 
   like : likeReducer ,
   getLikes : getLikesReducer ,
+  comment : commentReducer ,
+  newNotification : newNotificationReducer ,
 
 
   

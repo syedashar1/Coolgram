@@ -19,8 +19,8 @@ export default function MapLocation() {
         setViewport({
                 latitude: user.location.latitude,
                 longitude: user.location.longitude,
-                width: "60vw",
-                height: "60vh",
+                width: "95vw",
+                height: "450px",
                 zoom: 12
 
         })

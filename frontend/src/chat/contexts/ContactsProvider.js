@@ -9,15 +9,10 @@ export function useContacts() {
 }
 
 export function ContactsProvider({ children }) {
-  // const [contacts, setContacts] = useLocalStorage('contacts', [])
+  
   const ListForChat = useSelector((state) => state.ListForChat);
   const { users : users } = ListForChat
 
-  // function createContact(id, name) {
-  //   setContacts(prevContacts => {
-  //     return [...prevContacts, { id, name }]
-  //   })
-  // }
 
   return (
     <ContactsContext.Provider value={{ contacts : users  }}>

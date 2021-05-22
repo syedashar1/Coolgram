@@ -9,7 +9,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-
+import ExploreIcon from '@material-ui/icons/Explore';
 
 class Navbar extends Component {
 
@@ -21,7 +21,7 @@ class Navbar extends Component {
         render() {
 
           
-                const { userInfo , signout , user , removeSuccess  } = this.props
+                const { userInfo , signout , user , removeSuccess , senders , notification} = this.props
 
                 
           
@@ -42,15 +42,32 @@ class Navbar extends Component {
       <IconButton>
       <a style={{color:'#f6f6f6'}}  href="/chat"><ChatIcon fontSize="large" className="heart__icon" />  
 
-                                <span className="badge">{ user && user.conversations ? user.conversations.length : '' }</span>
+                                <span className="badge">{ 
+                                user && senders ? <p>{senders.length}</p>  : 
+                                user && user.newMessages ? <p>{user.newMessages.length}</p> : <p></p> }</span>
         </a>
         
       </IconButton>
+
+
+
+
+      <IconButton>
+      <Link style={{color:'#f6f6f6',marginBottom:'10px'}}  to="/explore"><ExploreIcon fontSize="large" className="heart__icon" /> 
+        </Link>
+        
+      </IconButton>
+
+
+
         
       <IconButton>
-      <Link style={{color:'#f6f6f6'}}  to="/matches"><FavoriteIcon fontSize="large" className="heart__icon" />  
+      <Link style={{color:'#f6f6f6'}}  to="/notifications"><FavoriteIcon fontSize="large" className="heart__icon" />  
                                 {user && userInfo && user.newMatches !== 0 && !removeSuccess &&
-                                <span className="badge">{user.newLikes}</span>
+                                <span className="badge">{
+                                        <p>{ notification || user.newNotifications}</p>
+                                        
+                                }</span>
         }  </Link>
         
       </IconButton>
@@ -98,7 +115,7 @@ class Navbar extends Component {
 
       
     </div>
-
+                       
 
                                 
                         </div>
@@ -114,10 +131,12 @@ export default connect(
 
                 userInfo : state.userSignin.userInfo ,
 
-                user : state.getDetails.user , 
+                user : state.getDetails.user ,
+                
+                senders : state.Notification.senders ,
 
 
-
+                notification : state.newNotification.notification
 
         
         
