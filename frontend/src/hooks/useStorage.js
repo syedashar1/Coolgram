@@ -36,7 +36,7 @@ const useStorage = (file , caption) => {
       const createdAt = timestamp();
       const x = await collectionRef.add({ url, createdAt , caption });
       console.log(x);
-      dispatch( createPost(url , caption ) )
+      await dispatch( createPost(url , caption ) )
       setUrl(url);
     });
   }, [file]);

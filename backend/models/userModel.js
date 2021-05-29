@@ -54,7 +54,9 @@ const userSchema = new mongoose.Schema(
                 comments : [{
                         id : {type : String} ,
                         comment : {type : String} ,
-                }] 
+                }] ,
+
+                showComments : {type:Boolean , default:true}
 
         }] ,
         

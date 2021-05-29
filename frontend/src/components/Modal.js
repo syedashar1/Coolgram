@@ -32,7 +32,7 @@ const Modal = ({ setSelectedImg, selectedImg , postBy }) => {
                   border: '1px solid #ccc',
                   borderRadius: '0px',
                   padding: '0px',
-                  maxWidth:'650px',
+                  maxWidth:'1250px',
                 }
               }}
               
@@ -40,7 +40,7 @@ const Modal = ({ setSelectedImg, selectedImg , postBy }) => {
                isOpen ={true} onRequestClose = { ()=>setSelectedImg(null) } >
               
               <Container style={{padding:'0px'}}>
-              <SinglePost id={postBy || user._id} postid={selectedImg} />
+              <SinglePost id={postBy || user._id} postid={selectedImg} inModal={true} />
               </Container>
 
               </ModaL>

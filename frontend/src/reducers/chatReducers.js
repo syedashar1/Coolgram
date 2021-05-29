@@ -8,7 +8,6 @@ export const ListForChatReducer = (state = { loading: true }, action) => {
           case LIST_FORCHAT_REQUEST:
             return { loading: true };
           case LIST_FORCHAT_SUCCESS:
-            console.log(action.payload);
             return { loading: false, users : action.payload };
           case LIST_FORCHAT_FAIL:
             return { loading: false, error: action.payload };
@@ -18,7 +17,6 @@ export const ListForChatReducer = (state = { loading: true }, action) => {
 };
 
 export const NotificationReducer = (state = {}, action) => {
-  console.log(state);
   switch (action.type) {
     case POP_NOTIFICATION:
       return { senders : action.payload };

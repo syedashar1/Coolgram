@@ -3,6 +3,8 @@ import useFirestore from '../hooks/useFirestore';
 import { motion } from 'framer-motion';
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import UploadFormProfilePic from './UploadFormProfilePic';
+import { Container } from 'react-bootstrap';
 
 const ImageGrid = ({ setSelectedImg }) => {
 
@@ -10,6 +12,9 @@ const ImageGrid = ({ setSelectedImg }) => {
 
         const getDetails = useSelector((state) => state.getDetails);
         const { user } = getDetails;
+
+        const userSignin = useSelector((state) => state.userSignin);
+        const { userInfo } = userSignin;
 
         const dispatch = useDispatch();
 
@@ -44,26 +49,33 @@ const ImageGrid = ({ setSelectedImg }) => {
         
 
   return (
-    <div className="text-center" style={{maxWidth:'230px'}} >
-        
-        
+    <div className="text-center" style={{maxWidth:'300px',minWidth:'130px' }}  >
 
+{user._id === userInfo._id && <UploadFormProfilePic />}
 <motion.div className="img-wrap" 
           layout
           whileHover={{ opacity : 1 }}s
         //   onClick={() => setSelectedImg(docs[0].url)}
-          style = {{borderRadius : '50%'}}
+          style = {{ zIndex: 1 , overflow :'hidden' , borderRadius:'50%',textAlign:'center'}}
         >
-          <motion.img 
+
+<div>
+            <motion.img 
           src={ docs && docs[0] ? docs[0].url :
         ""
         } 
           alt="uploaded pic"
+          style={{zIndex:-100 , textAlign:'center'}}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
+            
           />
-        </motion.div>
+</div>
+          
+</motion.div>
+        
+
 
     </div>
   )

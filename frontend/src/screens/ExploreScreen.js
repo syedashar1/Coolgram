@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import SinglePost from '../components/SinglePost';
 import ChatApp from '../chat/components/ChatApp';
 import Modal from '../components/Modal';
 import { SocketProvider } from '../chat/contexts/SocketProvider';
 import { motion } from 'framer-motion';
+import SearchComponent from '../components/SearchComponent';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 export default function ExploreScreen() {
@@ -22,6 +23,7 @@ export default function ExploreScreen() {
         const [state ,setState ] = useState([])
         const [page ,setPage ] = useState(1) 
         const [loading, setloading] = useState(false)
+        const [Search, setSearch] = useState('')
 
 
         useEffect(() => {
@@ -52,6 +54,8 @@ export default function ExploreScreen() {
         return (
                 <div>
 
+                        <SearchComponent Search={Search} setSearch={setSearch} />
+
                         <InfiniteScroll
                         dataLength={state.length}
                         next={scrollToEnd}
@@ -60,7 +64,7 @@ export default function ExploreScreen() {
                         >
 
 
-                        { userInfo && userInfo._id && state.length > 0 && <div>
+                        {userInfo && userInfo._id && state.length > 0 && Search=='' && <div>
 
                                 <ChatApp show={true} /> 
                                 <SocketProvider id={userInfo._id }>
@@ -75,7 +79,7 @@ export default function ExploreScreen() {
                                 >
                                 <img src={x.pic} alt="uploaded pic" className='image-to-hover'/>
                                 <div className="middle-text">
-                                <p>{x.totalLikes}</p>
+                                <h1> {x.totalLikes} <FavoriteIcon/></h1>
                                 </div>  
                                 </motion.div>
                                 ))}

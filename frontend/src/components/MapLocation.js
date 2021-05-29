@@ -20,7 +20,7 @@ export default function MapLocation() {
                 latitude: user.location.latitude,
                 longitude: user.location.longitude,
                 width: "95vw",
-                height: "450px",
+                height: "650px",
                 zoom: 12
 
         })

@@ -77,13 +77,13 @@ export default function NamePicNotification({type , by , post , comment , id }) 
                                           border: '1px solid #ccc',
                                           borderRadius: '0px',
                                           padding: '0px',
-                                          maxWidth:'650px',
+                                          maxWidth:'1140px',
                                         }}}
                                 
                                 isOpen ={true} onRequestClose = { ()=>setShowModal(false) } >
                                 
                                 <Container style={{padding:'0px'}}>
-                                <SinglePost id={id} postid={post} />
+                                <SinglePost id={id} postid={post}  inModal={true} />
                                 </Container>
 
                                 </Modal>

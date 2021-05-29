@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { ListForChatReducer, NotificationReducer } from './reducers/chatReducers';
 import { createPostReducer, profilePicReducer } from './reducers/imagesReducers';
 import { getLikesReducer, likeReducer , commentReducer, newNotificationReducer} from './reducers/likeCommentReducer';
-import {  userRegisterReducer, userSigninReducer , getDetailsReducer, userListReducer } from './reducers/userReducers';
+import {  userRegisterReducer, userSigninReducer , getDetailsReducer, userListReducer, searchedUsersReducer, userUpdateStatusReducer, userSuggestionReducer } from './reducers/userReducers';
 
 
 
@@ -16,6 +16,9 @@ const reducer = combineReducers({
   userRegister : userRegisterReducer ,
   getDetails : getDetailsReducer ,
   userList : userListReducer ,
+  searchedUsers : searchedUsersReducer ,
+  userUpdateStatus : userUpdateStatusReducer ,
+  userSuggestion : userSuggestionReducer ,
   
   
   profilePic : profilePicReducer ,

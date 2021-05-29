@@ -29,25 +29,30 @@ const UploadForm = () => {
   const handleChange1 = (e) => {
     e.preventDefault();
     setselected( e.target.files[0])
+    console.log(selected);
   };
 
 
 
   return (
-    <form className='' onSubmit={handleChange} >
+    <form className='text-center' onSubmit={handleChange} >
       <label className=''>
-        <input type="file" className="" onChange={handleChange1} ></input>
+        <input type="file" style={{display:'none'}} onChange={handleChange1} ></input>
         {selected &&<input type='text' placeholder='write something about' onChange={(e) => setcaption(e.target.value)} ></input>}
-        {selected && <p>image selected</p> }
-        <CameraAltIcon style={{fontSize:'50px'}}></CameraAltIcon>
+        {selected && <p>{selected.name }</p>}
+        {selected && <button style={{marginBottom:'50px'}} type="submit" >upload</button> }
+        <br></br>
+        <CameraAltIcon style={{fontSize:'90px',cursor:'pointer'}}></CameraAltIcon>
+        <h5>Create</h5>
       </label>
       <div className="output">
         { error && <div className="error">{ error }</div>}
         { file && <div>{ file.name }</div> }
         { file && <ProgressBar file={file} setFile={setFile} caption={caption} setcaption={setcaption} /> }
+        
       </div>
 
-    <button  type="submit" >upload</button>
+    
     </form>
   );
 }

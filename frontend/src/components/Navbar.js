@@ -44,7 +44,8 @@ class Navbar extends Component {
 
                                 <span className="badge">{ 
                                 user && senders ? <p>{senders.length}</p>  : 
-                                user && user.newMessages ? <p>{user.newMessages.length}</p> : <p></p> }</span>
+                                user && user._id === userInfo._id && user.newMessages ? 
+                                <p>{user.newMessages.length}</p> : <p></p> }</span>
         </a>
         
       </IconButton>
@@ -63,7 +64,7 @@ class Navbar extends Component {
         
       <IconButton>
       <Link style={{color:'#f6f6f6'}}  to="/notifications"><FavoriteIcon fontSize="large" className="heart__icon" />  
-                                {user && userInfo && user.newMatches !== 0 && !removeSuccess &&
+                                {user && userInfo && user.newMatches !== 0 && !removeSuccess && user._id === userInfo._id &&
                                 <span className="badge">{
                                         <p>{ notification || user.newNotifications}</p>
                                         
@@ -85,7 +86,6 @@ class Navbar extends Component {
         </Link>
                 <ul className="dropdown-content" >
                         <li> <Link  style={{color:'#f6f6f6'}} to="/update"> Edit Profile </Link> </li>
-                        <li> <Link  style={{color:'#f6f6f6'}} to="/likehistory"> like History </Link> </li>
                         <li> <Link  style={{color:'#f6f6f6'}} to="/" onClick={signout} > Sign Out </Link> </li>
                 </ul>
         </div>

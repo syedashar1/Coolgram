@@ -63,7 +63,6 @@ export default function NewsFeedScreen() {
         return (
                 <div> 
                         
-                        <button onClick={()=>console.log(state)} >click</button>
                         <div>
                         <InfiniteScroll
                         dataLength={state.length}
@@ -77,9 +76,11 @@ export default function NewsFeedScreen() {
                                 <ChatApp show={true} /> 
 
                                 <SocketProvider id={userInfo._id }>
-                                        {state.reverse().map( x => 
-                                        <SinglePost id={x.postedBy} postid={x.postId} />)
-                                        }
+                                        {state.reverse().map( x => <div style={{marginBottom:'100px'}} >
+                                        <SinglePost id={x.postedBy} postid={x.postId} />
+                                        </div>
+
+                                        )}
                                 </SocketProvider>   
 
                         </div>

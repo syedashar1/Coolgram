@@ -8,7 +8,6 @@ import nodemailer from 'nodemailer'
 import sendgridTransport from 'nodemailer-sendgrid-transport'
 import crypto from 'crypto'
 
-
 const userRouter = express.Router();
 
 const transporter = nodemailer.createTransport(sendgridTransport({
@@ -16,6 +15,73 @@ const transporter = nodemailer.createTransport(sendgridTransport({
       api_key:'asdasdasdasdasddfgfgdgfgdf'
   }
 }))
+
+
+
+
+
+
+
+userRouter.get("/search", async (req, res) => {
+  
+  const email = req.query.email || '';
+  const titleFilter = email ? { email: { $regex: email=== "all" ? '' : email , $options: 'i' } } : {};
+  console.log(titleFilter);
+  const users = await User.find({ ...titleFilter } ,'email profilePic name')
+  res.send(users);
+
+}); 
+
+
+
+// the idea is to suggest 10 users from user that he has in chat or people that like his posts and send in shuffle manner
+
+userRouter.get( '/userssuggestions/:id' , expressAsyncHandler(async (req, res) => {
+  
+  console.log(req.params.id);
+  
+  const user = await User.findById(req.params.id);
+
+  var suggestedUsersID = []
+
+  for (let i = 0; (i < user.forChat.length && suggestedUsersID.length < 20) ; i++) {
+    
+    suggestedUsersID.push( user.forChat[i] )
+
+  }
+  
+
+
+  for (let i = 0; i < user.posts.length && suggestedUsersID.length < 20 ; i++) {
+  
+      for (let k = 0; k < user.posts[i].likes.length && suggestedUsersID.length < 20 ; k++) {
+    
+        if(suggestedUsersID.indexOf(user.posts[i].likes[k]) == -1) suggestedUsersID.push( user.posts[i].likes[k] )
+        
+      }
+  }
+
+
+  if( suggestedUsersID.length < 15 ){
+    const moreUsers = await User.find({} , '_id' ).limit(6)
+    
+    for (let i = 0; i < moreUsers.length; i++) {
+      
+      if(suggestedUsersID.indexOf(moreUsers[i]._id) == -1) suggestedUsersID.push(moreUsers[i]._id )
+      
+    }
+
+  }
+
+
+
+  const suggestedUsers = await User.find({  '_id': { $in: suggestedUsersID} } , '_id name profilePic email' );
+  res.send(suggestedUsers.reverse())
+
+
+
+})
+);
 
 
 
@@ -45,6 +111,7 @@ userRouter.post( '/signin', expressAsyncHandler(async (req, res) => {
 userRouter.get( '/:id' , expressAsyncHandler(async (req, res) => {
         const user = await User.findById(req.params.id);
         user.notification.reverse()
+        user.posts.reverse()
         res.send(user);
       })
 );
@@ -142,6 +209,15 @@ userRouter.get("/", async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
 userRouter.post( '/reset', expressAsyncHandler(async (req, res) => {
           
   const user = await User.findOne({ email: req.body.email });
@@ -153,11 +229,6 @@ userRouter.post( '/reset', expressAsyncHandler(async (req, res) => {
   res.status(401).send({ message: 'Invalid email or password' });
 })
 );
-
-
-
-
-
 
 
 
@@ -226,11 +297,55 @@ userRouter.post('/new-password',(req,res)=>{
 
 
 userRouter.put( '/update', isAuth ,expressAsyncHandler(async (req, res) => {
-          
+  
+  console.log('updating');
   const user = await User.findById(req.user._id);
+
+  if(user.email !== req.body.email)
+  {
+    const existingEmail = await User.find({email : req.body.email})
+  
+    if(existingEmail) {
+      console.log({existingEmail:"this email already exists"});
+      res.status(401).send({existingEmail:"this email already exists"})
+      return
+    }
+  }
+
+  
+
   if (user) {
+
+    if (bcrypt.compareSync(req.body.oldPassword, user.password)) {
+
+
+      user.name = req.body.name || user.name ,
+      user.email =  req.body.email || user.email ,
+      user.bio =  req.body.bio || user.bio ,
+      user.password = bcrypt.hashSync( req.body.newPassword , 8 ) || user.password 
+
+      const updatedUser = await user.save()
+
+      console.log(updatedUser);
+      res.send({
+        _id: updatedUser._id,
+        email: updatedUser.email,
+        newMessages : updatedUser.newMessages ,
+        token: generateToken(updatedUser),
+        isSeller : updatedUser.seller || false ,
+      });
+      return;
+    }
+
+
+    else{
+      console.log({notMatched:"your password doesnt match"});
+      res.status(401).send({notMatched:"your password doesnt match"})
+      return
+    }
+
+
     
-    user.password = bcrypt.hashSync( req.body.password , 8 ) || user.password 
     
   }
    

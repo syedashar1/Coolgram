@@ -12,7 +12,7 @@ const UploadFormProfilePic = () => {
   const types = ['image/png', 'image/jpeg'];
 
   const options = {
-    maxSizeMB: 0.09,
+    maxSizeMB: 0.06,
     maxWidthOrHeight: 720,
     useWebWorker: true
   }
@@ -42,10 +42,10 @@ const UploadFormProfilePic = () => {
   };
 
   return (
-    <form className='imgUpload' >
+    <form className='imgUpload' style={{position:'absolute' , bottom : '-80px',right:'60px',zIndex:'1000' }} >
       <label className='imgUploadLabel' >
         <input type="file" className="filee" onChange={handleChange} ></input>
-        <CameraAltIcon style={{fontSize:'50px'}}></CameraAltIcon>
+        <CameraAltIcon style={{fontSize:'35px'}}></CameraAltIcon>
       </label>
       <div className="output">
         { error && <div className="error">{ error }</div>}

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import useFirestore from '../hooks/useFirestore';
 import { motion } from 'framer-motion';
-import Axios from 'axios';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ImageGrid = ({ setSelectedImg }) => {
@@ -47,7 +47,7 @@ const ImageGrid = ({ setSelectedImg }) => {
           <img src={x.pic} alt="uploaded pic" className='image-to-hover'
           />
           <div className="middle-text">
-          <p>{x.likes.length}</p>
+          <h1> {x.likes.length} <FavoriteIcon/></h1>
           </div>  
         </motion.div>
       ))}

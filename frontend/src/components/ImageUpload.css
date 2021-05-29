@@ -23,12 +23,12 @@
   width: 0;
   opacity: 0;
   padding: 0px;
-  padding-top: 15px;
+  padding-top: 10px;
 }
 .imgUploadLabel{
   display: block;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
   border: 1px solid #287094;
   border-radius: 50%;
   margin: 10px auto;
@@ -67,7 +67,7 @@
   margin: 0px auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 5px;
+  grid-gap: 1px;
 }
 .img-wrap{
   overflow: hidden;
@@ -697,7 +697,7 @@ main {
 
 
 .infinite-scroll-component{
-  padding: 15px;
+  padding: 15px 0px ;
   overflow: visible;
 }
 
@@ -769,4 +769,65 @@ main {
 
 .container-ofouter-image:hover .middle-text {
   opacity: 1;
+}
+
+
+.mark, mark {
+  padding: 0px;
+  background-color: #fbeda8;
+}
+
+
+.PrivateTabIndicator-root-2{
+  height: 7px !important ;
+  border-radius: 50px;
+}
+
+
+button:hover{
+  border: 0;
+}
+
+.MuiTab-fullWidth{
+  padding-bottom : 15px !important ;
+}
+
+
+
+.suggested-cards {
+  margin-top: 20px;
+  height: 220px;
+  background-color: rgb(234, 234, 234);
+  max-width: 170px;
+  text-align: center;
+  padding: 10px 0px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.suggested-cards div {
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.suggested-cards div img {
+  width: 100%;
+  text-align: center;
+}
+
+.suggested-cards h1 {
+  font-size: 25px;
+  margin: 0;
+  margin-top: -5px;
+
+}
+.suggested-cards p {
+  font-size: 15px;
+  margin-top: -10px;
+  
 }

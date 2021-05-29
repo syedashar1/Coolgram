@@ -336,4 +336,52 @@ likeCommentRouter.put( '/delete/:id/:postid', isAuth , expressAsyncHandler(async
 
 
 
+
+
+
+
+likeCommentRouter.put( '/showcomments/:postid', isAuth , expressAsyncHandler(async (req, res) => {
+          
+        const user = await User.findById(req.user._id);
+
+        var found = false
+        
+        if ( user ) {
+                for(var i = 0 ; i < user.posts.length ; i++ ){
+                        
+                        if (user.posts[i]._id == req.params.postid ) {
+                          console.log('found it !  at' , i );
+                          found = true
+                          break
+                        }
+                }
+
+                if(found){
+                        
+                if(user.posts[i].showComments){ 
+
+                        user.posts[i].showComments = false
+
+                }
+
+                else {
+                        user.posts[i].showComments = true
+                }
+                await user.save()
+                console.log({message : 'changed Show comments'});
+                res.send({message : 'changed Show comments'})
+
+
+                }
+
+
+
+          }
+        
+      
+}))
+
+
+
+
 export default likeCommentRouter
