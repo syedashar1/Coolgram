@@ -316,7 +316,9 @@ likeCommentRouter.put( '/delete/:id/:postid', isAuth , expressAsyncHandler(async
                 if (found) {
                         
                         user.posts.splice(i,1)
+                        user.notification = user.notification.filter(x =>  x.post != req.params.postid)
                         await user.save()
+
                         
 
                         // const result = await client.db("sample_airbnb").collection("listingsAndReviews")

@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import useFirestore from '../hooks/useFirestore';
 import { motion } from 'framer-motion';
-import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import UploadFormProfilePic from './UploadFormProfilePic';
-import { Container } from 'react-bootstrap';
 
 const ImageGrid = ({ setSelectedImg }) => {
 
@@ -61,8 +59,8 @@ const ImageGrid = ({ setSelectedImg }) => {
 
 <div>
             <motion.img 
-          src={ docs && docs[0] ? docs[0].url :
-        ""
+          src={ docs && docs[0] ? docs[0].url : 'https://i.pinimg.com/236x/a0/4d/84/a04d849cf591c2f980548b982f461401.jpg'
+        
         } 
           alt="uploaded pic"
           style={{zIndex:-100 , textAlign:'center'}}

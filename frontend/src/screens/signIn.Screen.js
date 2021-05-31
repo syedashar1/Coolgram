@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { signin , signout } from '../actions/userActions' ;
- 
+import Slide from 'react-reveal/Slide';
+
 class SignIn extends Component {
 
         constructor(){
@@ -37,19 +38,17 @@ render() {
 
 
         return (
-        <div>
+        <Slide right>
 
-                <form className="form text-center" style={{maxWidth:'360px' , marginTop:100}} onSubmit={this.submitHandler}>
+                <form className="form text-center" style={{maxWidth:'460px' , marginTop:100}} onSubmit={this.submitHandler}>
                 
                 <div >
-                        <h1><b>WELCOME</b></h1>
+                <p className='logo'>Coolgram</p>
                 </div>
                 <div>
-                <label htmlFor="email">Email address</label>
                 <input type="email" id="email" placeholder="Enter email" required onChange={(e) => this.setState({ email : e.target.value})}></input>
                 </div>
                 <div>
-                <label htmlFor="password">Password</label>
                 <input type="password" id="password" placeholder="Enter password" required onChange={(e) => this.setState({ password : e.target.value})}></input>
                 { this.props.signinLoading &&  <p>Siging in...</p> }
                 { this.props.signinError &&  this.props.signinError }
@@ -59,21 +58,34 @@ render() {
                         <button style={{width:'100px' , borderRadius:'20px' ,backgroundColor:'#287094' , color:'white'}} type="submit"> Sign In </button>
                         
                 </div>
+
+                </form>
+                
+                <div className='form' style={{maxWidth:'460px' , marginTop:20 , padding:'0px',textAlign:'center'}}>
                 <div>
                         <label />
-                        <div>New Here ?{' '}
+                        <div>Don't have an account?{' '}
                                 <Link to={`/register?redirect=${redirect}`}>
-                                Create your account for Free !
+                                Sign up
                                 </Link>     
                         </div>
+
+                        <br></br>
+                        <div>
+                                <Link to={`/reset/null`}>
+                                Forgot Password ? 
+                                </Link>     
+                        </div>
+                        <br></br>
+
                 </div>
-                        </form>
+                </div>
 
 
                 
 
 
-    </div>
+    </Slide>
                 )
         }
 }

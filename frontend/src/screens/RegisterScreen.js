@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { register , signin , signout } from '../actions/userActions' ;
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container , Row , Col } from 'react-bootstrap';
 import "./styles/froms.css"
-import RubberBand from 'react-reveal/RubberBand';
-import { Image } from 'react-bootstrap';
+import Slide from 'react-reveal/Slide';
+
 
 
 
@@ -163,88 +162,54 @@ render() {
 
 
         return (
-        <div>
+        <Slide left>
 
 
-                <form className="form upgap" onSubmit={this.submitHandler}>
+                <form className="form text-center" style={{maxWidth:'460px' , marginTop:100}} onSubmit={this.submitHandler}>
 
-                
-
-
-                <div className='text-center'>
-                        <h1>Register a New User</h1>
-                        
+                <div >
+                <p className='logo'>Coolgram</p>
+                <p className='desc' >Sign up to connect with the coolgram family.</p>
                 </div>
-                
+
+
+                <div >
+                <input type="text" id="full name" placeholder="Enter name" required onChange={(e) => this.setState({ name : e.target.value})}></input>
+                </div>
                 <div>
-                <label htmlFor="email">Email address</label>
                 <input type="email" id="email" placeholder="Enter email" required onChange={(e) => this.setState({ email : e.target.value})}></input>
                 </div>
                 <div>
                 {this.props.registerError && (<> {this.props.registerError } </>)}
-                <label htmlFor="password">Password</label>
                 <input type="password" id="password" placeholder="Enter password" required onChange={(e) => this.setState({ password : e.target.value})}></input>
                 </div>
                 <div>
-                <label htmlFor="confirmPassword">confirm Password</label>
                 <input type="password" id="confirmPassword" placeholder="Confirm password" required onChange={(e) => this.setState({ confirmPassword : e.target.value})}></input>
                 { this.state.passwordNotMatched && ( <div style={{color:'red'}} >password did not match</div> )
 
                 }
                 </div>
                 
-                <div style={{height:"100px"}}/>
+                <div style={{height:"60px"}}/>
 
-                <Container>
-                <Row>
 
                 
 
-                
-
-                <Col className="text-center lineright" sm={6} >
-                        <h1>Parent 1</h1>
-                
-                <div >
-                <p >Full Name</p>
-                <input type="text" id="full name" placeholder="Enter full name" required onChange={(e) => this.setState({ name : e.target.value})}></input>
-                </div>
                 <div>
-                <p>Age</p>
                 <input type="number" placeholder="Enter Age"  onChange={(e) => this.setState({ age : e.target.value})}></input>
                 </div>
                 <div>
-                <p>Country</p>
                 <input type="text" placeholder="Enter Country"  onChange={(e) => this.setState({ country : e.target.value})}></input>
                 </div>
                 <div>
-                <p>City</p>
                 <input type="text" placeholder="Enter City"  onChange={(e) => this.setState({ city : e.target.value})}></input>
                 </div>
 
-
-                </Col>
-
-
-               
-
-                </Row>
-                </Container>
-
-                <div style={{height:"100px"}}/>
-
-                
-
-
-               <div style={{height:"80px"}}/>
-
-
                
                 <div className="text-center">
-                <h1>Bio</h1>
                 <div>
-              <textarea id="description" rows="5" cols="70" type="text"
-                placeholder="Enter family description" onChange={(e) => this.setState({ bio : e.target.value})}
+              <textarea id="description" rows="3" cols="26" type="text"
+                placeholder="Enter Bio" onChange={(e) => this.setState({ bio : e.target.value})}
               ></textarea>
             </div>
                 </div>
@@ -268,21 +233,28 @@ render() {
                 
                 
 
-                <div>
-                        <label />
-                        <div>Already have an account ?{' '}
-                                <Link to={`/signin`}>
-                                Sign In
-                                </Link>     
-                        </div>
-                </div>
+
                         </form>
+
+
+
+                <div className='form' style={{maxWidth:'460px' , marginTop:20 , padding:'20px',textAlign:'center',marginBottom:'100px'}}>
+                <div> <span>
+
+                Have an account ?{' '}
+                        <Link to={`/signin`}>
+                        Sign In
+                        </Link> 
+                
+                </span>    
+                </div>
+                </div>
 
 
                 
 
 
-    </div>
+    </Slide>
                 )
         }
 }

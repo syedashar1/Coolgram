@@ -1,18 +1,12 @@
 import React, { useEffect , useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { listUsers } from '../actions/userActions' ;
-import { Accordion, Card, Carousel, Col, Container, Row , Image } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import SinglePost from '../components/SinglePost';
-import Navbar from '../components/Navbar';
 import { SocketProvider } from '../chat/contexts/SocketProvider';
-import { ContactsProvider } from '../chat/contexts/ContactsProvider';
-import { ConversationsProvider } from '../chat/contexts/ConversationsProvider';
-import Dashboard from '../chat/components/Dashboard';
 import ChatApp from '../chat/components/ChatApp';
+import Fade from 'react-reveal/Fade';
 
 export default function NewsFeedScreen() {
 
@@ -76,7 +70,7 @@ export default function NewsFeedScreen() {
                                 <ChatApp show={true} /> 
 
                                 <SocketProvider id={userInfo._id }>
-                                        {state.reverse().map( x => <div style={{marginBottom:'100px'}} >
+                                        {state.reverse().map( x => <div style={{marginBottom:'50px'}} >
                                         <SinglePost id={x.postedBy} postid={x.postId} />
                                         </div>
 
@@ -90,7 +84,15 @@ export default function NewsFeedScreen() {
                         </InfiniteScroll>
 
 </div>
-                        <h1>{loading ? <p> Loading... </p> : <h1> the end </h1>  }</h1>
+                        <h1>{loading ? 
+                        <div className='row center upgap' > <div className='cm-spinner' ></div> </div>
+                        : 
+                        
+                        <Fade>
+                        <h1 style={{fontSize:100,textAlign:'center',overflow:'hidden'}} className='logo'> Fin. </h1>
+                        </Fade>
+
+                        }</h1>
 
                 </div>
         )

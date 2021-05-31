@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-:root{
-  --primary: #efb6b2;
-  --secondary: #4e4e4e;
-  --error: #ff4a4a;
-}
 
 .AppFireGram{
   max-width: 960px;
@@ -147,11 +143,12 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(248, 249, 250);
+  overflow-x: hidden;
   
 }
 #root {
-  background-color: rgb(248, 249, 250);
-  
+  overflow-x: hidden;
   height: 100%;
 }
 
@@ -404,11 +401,29 @@ img.medium {
 .form {
   max-width: 60rem;
   margin: 0 auto;
+  border-radius: 0px;
 }
+
+.form .logo {
+  font-size: 80px;
+  padding-bottom: 40px;
+}
+
+.form .desc {
+    font-size: 25px;
+    font-weight: 700;
+    color: grey;
+}
+
+.form input {
+  background-color: rgb(248, 249, 250);
+}
+
 .form > div {
   display: flex;
   flex-direction: column;
   margin: 1rem;
+  padding: 0px 45px;
 }
 .form label {
   margin: 1rem 0;
@@ -449,14 +464,6 @@ img.medium {
 .table button {
   margin: 0 0.2rem;
 }
-
-
-main {
-  padding-bottom: 150px;
-  margin-bottom: 100px;
-}
-
-
 
 
 
@@ -830,4 +837,36 @@ button:hover{
   font-size: 15px;
   margin-top: -10px;
   
+}
+
+
+.logo{
+  font-family: 'Pacifico', cursive;
+}
+
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin-top: 150px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: rgb(145, 145, 145) transparent rgb(145, 145, 145) transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

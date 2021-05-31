@@ -42,7 +42,7 @@ const UploadFormProfilePic = () => {
   };
 
   return (
-    <form className='imgUpload' style={{position:'absolute' , bottom : '-80px',right:'60px',zIndex:'1000' }} >
+    <form className='imgUpload' style={{position:'absolute' , bottom : '-80px',right:'60px',zIndex:'1000'}} >
       <label className='imgUploadLabel' >
         <input type="file" className="filee" onChange={handleChange} ></input>
         <CameraAltIcon style={{fontSize:'35px'}}></CameraAltIcon>

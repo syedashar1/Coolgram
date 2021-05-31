@@ -30,7 +30,7 @@ class Navbar extends Component {
           return (
                         <div>
     <div className="header">
-    <Link style={{color:'#f6f6f6'}}  to="/"><h1 className="header__brand">Framily</h1></Link>
+    <Link style={{color:'#f6f6f6'}}  to="/"><h1 className="header__brand logo">Coolgram</h1></Link>
       
 
 
@@ -85,7 +85,7 @@ class Navbar extends Component {
         <i className="fa fa-caret-down"></i>{' '}
         </Link>
                 <ul className="dropdown-content" >
-                        <li> <Link  style={{color:'#f6f6f6'}} to="/update"> Edit Profile </Link> </li>
+                        <li> <Link  style={{color:'#f6f6f6'}} to="/profile"> Edit Profile </Link> </li>
                         <li> <Link  style={{color:'#f6f6f6'}} to="/" onClick={signout} > Sign Out </Link> </li>
                 </ul>
         </div>

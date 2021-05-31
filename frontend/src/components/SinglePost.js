@@ -15,6 +15,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Bounce from 'react-reveal/Bounce';
+import Jump from 'react-reveal/Jump';
 
 export default function SinglePost({ id , postid , inModal }) {
 
@@ -31,7 +32,7 @@ export default function SinglePost({ id , postid , inModal }) {
         const [ShowComments, setShowComments] = useState(0)
         const [Deleted, setDeleted] = useState(false)
         const [ShowCommentsToggle, setShowCommentsToggle] = useState(false)
-
+        const [CurrentDate, setCurrentDate] = useState(new Date().toDateString())
 
         const [Saved, setSaved] = useState(false)
         const [SavedinDB, setSavedinDB] = useState(false)
@@ -58,6 +59,9 @@ export default function SinglePost({ id , postid , inModal }) {
                 setloading(true)
                 axios.get(`/api/newsfeed/getpost/${id}/${postid}`)
                 .then(res => {
+
+                        if(res.data){
+                        
                         setState(res.data);
                         setloading(false);
                         setCaption(res.data.post.caption);
@@ -67,7 +71,9 @@ export default function SinglePost({ id , postid , inModal }) {
                                 setShowComments(res.data.post.comments.length - 2)
 
 
-                        console.log(res.data);
+
+                        }
+
 
 
                 } )
@@ -222,30 +228,62 @@ export default function SinglePost({ id , postid , inModal }) {
 
 
 
+        const showDate = (x) => {
+                
+                const month = x.split('T')[0].split('-')[1]
+                var setMonth = ''
+                
+                if(month == 1) setMonth = 'Jan'
+                if(month == 2) setMonth = 'Feb'
+                if(month == 3) setMonth = 'Mar'
+                if(month == 4) setMonth = 'Apr'
+                if(month == 5) setMonth = 'May'
+                if(month == 6) setMonth = 'June'
+                if(month == 7) setMonth = 'July'
+                if(month == 8) setMonth = 'Aug'
+                if(month == 9) setMonth = 'Sep'
+                if(month == 10) setMonth = 'Oct'
+                if(month == 11) setMonth = 'Nov'
+                if(month == 12) setMonth = 'Dec'
+
+
+                if(CurrentDate.split(' ')[1] == setMonth && CurrentDate.split(' ')[2]== x.split('T')[0].split('-')[2] )
+                        { return 'Today' }
+                else if( CurrentDate.split(' ')[1] == setMonth && CurrentDate.split(' ')[2]-1 == x.split('T')[0].split('-')[2]  )
+                        { return 'Yesterday'}
+        // "Mon May 31 2021"
+
+                return x.split('T')[0].split('-')[2] + ' ' + setMonth  + ' ' + x.split('T')[0].split('-')[0]
+        }
+
+
+
 
 
 
         return (
                 <div > 
-                        {!loading && state && state._id && !Deleted  &&
+                        {!loading && state && state._id && !Deleted  && 
                         
 
                         <motion.div 
                         initial={{ y: inModal ? "-100vh" : '0' }} 
                         animate={{ y: 0 }} >
 
-                        <Container style={{maxWidth: inModal ? '100%' : '650px',background:'#f0f0f0',padding:'0px'}}>
+                        <Container style={{
+                                maxWidth: inModal ? '100%' : '650px',background:'white',padding:'10px 0px',overflowX:'hidden' , 
+                                boxShadow: 'rgba(60, 64,67, 0.3) 0 1px 2px 0 , rgba(60, 64,67, 0.15) 0 1px 3px 1px'  }}>
                                 <Row style={{margin:'0px',padding:'0px'}}>
 
                                 
 
 
-                                <Col md={inModal ? 7 : 12}>
+                                <Col md={inModal ? 7 : 12} style={{padding:'0px'}} >
                                 <div className='row' >
-                                        <p><Image src={state.profilePic} style={{width:'85px' , height:'85px' , borderRadius:'50%', cursor :'pointer' }} alt='a pic' 
-                                        onClick={ () => {history.push(`/user/${state._id}`)} }/><span>{state.name}</span></p>
+                                        <h1><Image src={state.profilePic} style={{width:'85px' , height:'85px' , borderRadius:'50%', cursor :'pointer',margin : '0px 25px ' }} alt='a pic' 
+                                        onClick={ () => {history.push(`/user/${state._id}`)} }/><b>{state.name}</b></h1>
                                         {userInfo._id === id && <div className="dropdown">
-                                        <MoreVertIcon style={{fontSize:'40px'}} />
+                                        <MoreVertIcon style={{fontSize:'40px',marginRight:'25px'}} />
                                                 <ul className="dropdown-content-for-post" >
                                                         <li onClick={()=>setShowEditField(true)} >Edit</li>
                                                         <li onClick={()=> handleDelete() }>Delete</li>
@@ -262,15 +300,15 @@ export default function SinglePost({ id , postid , inModal }) {
                                                 </ul>
                                         </div>}
                                 </div>
-                                <div><img style={{width:'100%'}} src={state.post.pic} ></img></div>
+                                <div style={{minHeight:'300px'}} ><img style={{width:'100%'}} src={state.post.pic } ></img></div>
 
 
 
                                 <div className='row' style={{margin:'5px 10px'}} >
                                 <p onClick={()=> likeHandle(state.post._id) } style={{cursor:'pointer'}} >
                                 {
-                                state.post.likes.indexOf(userInfo._id) != -1 && likedPosts.indexOf(state.post._id) == -1 ? <FavoriteIcon  style={{fontSize:'70px', color:'red'}}/> : 
-                                state.post.likes.indexOf(userInfo._id) == -1 && likedPosts.indexOf(state.post._id) != -1 ? <FavoriteIcon  style={{fontSize:'70px', color:'red'}}/> :
+                                state.post.likes.indexOf(userInfo._id) != -1 && likedPosts.indexOf(state.post._id) == -1 ? <Bounce ><FavoriteIcon  style={{fontSize:'70px', color:'red'}}/></Bounce > : 
+                                state.post.likes.indexOf(userInfo._id) == -1 && likedPosts.indexOf(state.post._id) != -1 ? <Bounce ><FavoriteIcon  style={{fontSize:'70px', color:'red'}}/></Bounce > :
                                 state.post.likes.indexOf(userInfo._id) != -1 && likedPosts.indexOf(state.post._id) != -1 ? <FavoriteBorderIcon  style={{fontSize:'70px', color:'grey'}}/> :  
                                 <FavoriteBorderIcon  style={{fontSize:'70px', color:'grey'}}/>
                                 }        
@@ -289,8 +327,8 @@ export default function SinglePost({ id , postid , inModal }) {
 
                                 <p onClick={()=>handleSavePosts()} style={{cursor:'pointer'}} >
                                 {
-                                !SavedinDB && Saved ? <BookmarkIcon style={{fontSize:'70',color :'black'}} /> :
-                                SavedinDB && !Saved ? <BookmarkIcon style={{fontSize:'70',color :'black'}}/> :
+                                !SavedinDB && Saved ? <Jump><BookmarkIcon style={{fontSize:'70',color :'black'}} /></Jump> :
+                                SavedinDB && !Saved ? <Jump><BookmarkIcon style={{fontSize:'70',color :'black'}} /></Jump> :
                                 SavedinDB && Saved ? <BookmarkBorderIcon  style={{fontSize:'70',color :'grey'}}/> : 
                                 <BookmarkBorderIcon  style={{fontSize:'70',color :'grey'}}/> 
                                 }
@@ -327,7 +365,8 @@ export default function SinglePost({ id , postid , inModal }) {
                                 <div><h1 style={{textAlign:'center'}}>{Caption}</h1>
                                 
                                 
-                                <h5 style={{textAlign:'right'}} >{'posted At ' + state.post.createdAt.split('T')[0] }</h5>
+                                <h5 style={{textAlign:'right',color:'gray'}} >{ showDate(state.post.createdAt)} </h5>
+                                {/* <h5 style={{textAlign:'right',color:'gray'}} >{state.post.createdAt} </h5> */}
                                 
                                 </div>
                                 
@@ -349,8 +388,11 @@ export default function SinglePost({ id , postid , inModal }) {
                                 <span onClick={handleShowMoreComments} style={{cursor:'pointer'}} ><b>Show More</b></span>
                                 }
 
-                                <div style={{maxHeight: inModal ? "600px" : '400px' ,overflowY:'auto',maxWidth:'650px',background:'white'}} >
+                                {state.post.showComments  && <hr/>}
+                                
+                                <div style={{maxHeight: inModal ? "650px" : '400px' ,overflowY:'auto',maxWidth:'650px',background:'rgba(256, 256, 256,.6)'}} >
 
+                                
 
                                 { state.post.comments && 
                                         state.post.comments
@@ -365,6 +407,10 @@ export default function SinglePost({ id , postid , inModal }) {
                                 </div>
                                 
                                 {ShowCommentsToggle && <form onSubmit={handleComments}>
+
+                                {commentedPosts.length + state.post.comments.length > 0 && <hr/>}
+
+
                                 <input value={ cc } onChange={(e) => setcc(e.target.value)} style={{width:'80%'}} />
                                 <button onClick={handleComments} style={{width:'20%'}} >Send</button>
                                 </form>}
@@ -373,6 +419,7 @@ export default function SinglePost({ id , postid , inModal }) {
 
 
                                 </div>
+
 
                                 </div>
                                 </Col>
@@ -427,7 +474,13 @@ export default function SinglePost({ id , postid , inModal }) {
 
 
                         }
-                        {loading && 'loading...'}
+                        {loading && <Container style={{ 
+                                minHeight:'600px' , maxWidth: inModal ? '100%' : '650px',textAlign:'center',
+                                background:'white', boxShadow: 'rgba(60, 64,67, 0.3) 0 1px 2px 0 , rgba(60, 64,67, 0.15) 0 1px 3px 1px'  }}>
+
+                        <div class="lds-dual-ring"></div>
+
+                        </Container>}
                         
                         
                         

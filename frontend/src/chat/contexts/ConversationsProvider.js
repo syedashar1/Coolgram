@@ -91,14 +91,15 @@ export function ConversationsProvider({ id, children }) {
 
   }
 
-
+// here we send to each contact what we want
   const formattedConversations = conversations.map((conversation, index) => {
     const recipients = conversation.recipients.map(recipient => {
       const contact = users.find(contact => {
         return contact._id === recipient
+        //it sends the contact from the contacts that matches the id
       })
       const name = (contact && contact.name) || recipient
-      return { id: recipient, name }
+      return { id: recipient, name , profilePic : contact.profilePic }
     })
 
     const messages = conversation.messages.map(message => {

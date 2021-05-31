@@ -29,7 +29,7 @@ postFeedRouter.get( '/getpost/:id/:postid' , expressAsyncHandler(async (req, res
                   res.send({_id : otherUser._id , name : otherUser.name , profilePic : otherUser.profilePic , post : otherUser.posts[i] })
           }
           else {
-                  res.status(401).send({message : 'post not found'})
+                  res.send(null)
           }
 
   }

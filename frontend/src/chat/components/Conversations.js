@@ -23,13 +23,13 @@ export default function Conversations() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('dispatched');
+    console.log(conversations);
     dispatch( userDetails )
     
   }, [   ])
 
   return (
-    <ListGroup variant="flush">
+    <ListGroup variant="flush" style={{textAlign:'center'}} >
       { conversations.length === 0 ? 
       <div style={{textAlign : 'center' , marginTop : '20px' , fontSize :'30px'}} >You dont any contacts yet :/ </div> :
       conversations.map((conversation, index) => (
@@ -45,7 +45,10 @@ export default function Conversations() {
                   }}
           active={conversation.selected}
         >
-          <p > {conversation.recipients.map(r => r.name).join(', ')} </p>
+          <div style={{height:'50px',width:'50px',borderRadius:'50%',overflow:'hidden',textAlign:'center',display:'inline-block'}} >
+            <img src={conversation.recipients[0].profilePic}></img>
+          </div>
+          <p> {conversation.recipients.map(r => r.name).join(', ')} </p>
 
             {senders && senders.indexOf(conversation.recipients[0].id) != -1 &&
             Checked.indexOf(conversation.recipients[0].id) == -1 && <p>new</p> }

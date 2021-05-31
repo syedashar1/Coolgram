@@ -39,7 +39,7 @@ const UploadForm = () => {
       <label className=''>
         <input type="file" style={{display:'none'}} onChange={handleChange1} ></input>
         {selected &&<input type='text' placeholder='write something about' onChange={(e) => setcaption(e.target.value)} ></input>}
-        {selected && <p>{selected.name }</p>}
+        {selected && <h6>{selected.name }</h6>}
         {selected && <button style={{marginBottom:'50px'}} type="submit" >upload</button> }
         <br></br>
         <CameraAltIcon style={{fontSize:'90px',cursor:'pointer'}}></CameraAltIcon>

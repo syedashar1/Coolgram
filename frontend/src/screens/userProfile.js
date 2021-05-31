@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
 import { Col, Container, Row } from 'react-bootstrap';
 import ProfilePic from "../components/ProfilePic"
 import { update, userDetails, userSuggest } from '../actions/userActions';
@@ -87,7 +86,7 @@ export default function UserProfile(props) {
                 e.preventDefault()
 
 
-                axios.put(`/api/chat/singletext/${userInfo._id}`, {text : this.state.message , recipients: [user._id] }  );
+                axios.put(`/api/chat/singletext/${userInfo._id}`, {text : Message , recipients: [user._id] }  );
                 setopenModal(false)
 
         }
@@ -155,9 +154,9 @@ export default function UserProfile(props) {
                         <Col xs={4} >
                         <Container>
                         <Row>
-                        <Col>
+                        {!EditState && <Col>
                         <p className='text-center'> <span  style={{fontSize:'50px',fontWeight:'bold'}}>{user.posts.length }</span> <span>Posts</span> </p>
-                        </Col>
+                        </Col>}
                         </Row>
                         </Container>
 
@@ -211,9 +210,13 @@ export default function UserProfile(props) {
 
                 <div style={{height:'20px'}} />
                 
-                {user._id === userInfo._id ? <><UploadForm /></> : 
 
+                {!EditState &&
+                <div>
+                {user._id === userInfo._id ? <><UploadForm /></> : 
                 <p className='text-center'><button onClick={()=>setopenModal(true)} >Message</button></p>
+                }
+                </div>
                 
                 }
 
@@ -240,14 +243,29 @@ export default function UserProfile(props) {
                 
 
                 {openModal && (
-                <Modal isOpen ={true} onRequestClose = { ()=>setopenModal(false) } >
+                <Modal isOpen ={true} onRequestClose = { ()=>setopenModal(false) }
+                style={{
+                        content: {
+                          margin: 'auto',
+                          border: '1px solid #ccc',
+                          borderRadius: '0px',
+                          padding: '10px',
+                          maxWidth:'660px',
+                          maxHeight:'330px',
+                        }
+                      }}
+
+                >
                         <Zoom>
+
                         <form className="form upgap text-center" onSubmit={submitHandler} >
                         <textarea id="description" rows="5" cols="50" type="text" required="true"
                         placeholder="Enter family description" onChange={(e) => setMessage(e.target.value) }
                         ></textarea>
                         <button>send</button>
                         </form>
+
+
                         </Zoom>
 
                 </Modal>

@@ -10,14 +10,20 @@ import crypto from 'crypto'
 
 const userRouter = express.Router();
 
-const transporter = nodemailer.createTransport(sendgridTransport({
-  auth:{
-      api_key:'asdasdasdasdasddfgfgdgfgdf'
+// const transporter = nodemailer.createTransport(sendgridTransport({
+//   auth:{
+//       api_key:'asdasdasdasdasddfgfgdgfgdf'
+//   }
+// }))
+
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: process.env.EMAIL || 'davecorperations@gmail.com', // TODO: your gmail account
+      pass: process.env.PASSWORD || 'xavimessiashar1' // TODO: your gmail password
   }
-}))
-
-
-
+});
 
 
 
@@ -112,6 +118,7 @@ userRouter.get( '/:id' , expressAsyncHandler(async (req, res) => {
         const user = await User.findById(req.params.id);
         user.notification.reverse()
         user.posts.reverse()
+        user.savedPosts.reverse()
         res.send(user);
       })
 );
@@ -258,6 +265,7 @@ userRouter.post('/reset-password',(req,res)=>{
                   html:`
                   <p>You requested for password reset</p>
                   <h5>click in this link to reset password</h5>
+                  <h5>click in this <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>
                   `
               })
               res.json(user)
@@ -272,21 +280,29 @@ userRouter.post('/reset-password',(req,res)=>{
 
 
 userRouter.post('/new-password',(req,res)=>{
+
+  console.log('entered');
+
   const newPassword = req.body.password
   const sentToken = req.body.token
   User.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
   .then(user=>{
       if(!user){
+        console.log('expired');
           return res.status(422).json({error:"Try again session expired"})
       }
-      bcrypt.hash(newPassword,12).then(hashedpassword=>{
+      const hashedpassword = bcrypt.hashSync(newPassword,8)
+      
+
          user.password = hashedpassword
          user.resetToken = undefined
          user.expireToken = undefined
          user.save().then((saveduser)=>{
-             res.json({message:"password updated success"})
-         })
+            console.log(saveduser);
+            res.json(saveduser)
       })
+
+
   }).catch(err=>{
       console.log(err)
   })

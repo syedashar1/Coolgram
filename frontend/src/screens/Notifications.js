@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetNewNotification } from '../actions/likeCommenentActions'
-import { userDetails } from '../actions/userActions'
-import ChatApp from '../chat/components/ChatApp'
 import { useSocket } from '../chat/contexts/SocketProvider'
 import NamePicNotification from '../components/NamePicNotification'
 
@@ -48,7 +46,7 @@ export default function Notifications({SocketNotifications , setSocketNotificati
         return (
                 <div>
 
-                {user && SocketNotifications && SocketNotifications.length !== 0 && SocketNotifications.map(y => <div>asd
+                {user && SocketNotifications && SocketNotifications.length !== 0 && SocketNotifications.map(y => <div>
                 <NamePicNotification type={y.type} by={y.by} id={user._id} post={y.post} comment={y.comment} />
                 </div>
                 )}
@@ -62,6 +60,7 @@ export default function Notifications({SocketNotifications , setSocketNotificati
                         >
                 {user && user.notification && user.notification.slice(0, Page).map(x => <div>
                 <NamePicNotification type={x.type} by={x.by} id={user._id} post={x.post} comment={x.comment} />
+                
                 </div>)}
 
                 </InfiniteScroll>

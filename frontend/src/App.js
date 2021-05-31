@@ -12,6 +12,7 @@ import Notifications from './screens/Notifications';
 import NotitificationScreen from './screens/NotitificationScreen';
 import UserProfile from './screens/userProfile';
 import ExploreScreen from './screens/ExploreScreen';
+import ResetScreen from './screens/ResetScreen';
 
 
 class App extends React.Component {
@@ -38,6 +39,7 @@ class App extends React.Component {
                 <Route path="/" component={NewsFeedScreen} exact></Route>
                 <Route path="/user/:id" component={UserProfile} exact></Route>
                 <Route path="/chat" component={ChatApp}></Route>
+                <Route path="/reset/:token" component={ResetScreen}></Route>
 
                  
 

@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import {userDetails } from "../actions/userActions"
 import FireGram from "../components/FireGram"
-import PostsMongo from '../components/PostsMongo';
 import ProfilePic from "../components/ProfilePic"
 import { Col, Container, Row } from 'react-bootstrap';
-import MapLocation from '../components/MapLocation';
 import Modal from "react-modal"
 import Zoom from "react-reveal/Zoom"
 import axios from 'axios';

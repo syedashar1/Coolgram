@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
         
         bio : { type : String } ,
 
-        profilePic : {type: String },
+        profilePic : {type: String , default : 'https://cdn130.picsart.com/318381621277201.jpg?type=webp&to=min&r=640'},
 
         location : {
                 latitude : {type : Number} , 
