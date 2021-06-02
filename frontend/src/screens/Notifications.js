@@ -12,7 +12,6 @@ export default function Notifications({SocketNotifications , setSocketNotificati
         const socket = useSocket()
 
         const user = useSelector(state => state.getDetails.user)
-        const userInfo = useSelector((state) => state.userSignin.userInfo);
 
         const [Page, setPage] = useState(6)
 

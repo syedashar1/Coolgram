@@ -55,7 +55,8 @@ render() {
                 </div>
                 <div className='row center'>
                 <label />
-                        <button style={{width:'100px' , borderRadius:'20px' ,backgroundColor:'#287094' , color:'white'}} type="submit"> Sign In </button>
+                        <button style={{height :'55px' , borderRadius:'0px' ,backgroundColor:'#0095f6' , color:'white',
+                        border: '1px solid transparent' }} type="submit"> Sign In </button>
                         
                 </div>
 
@@ -65,14 +66,14 @@ render() {
                 <div>
                         <label />
                         <div>Don't have an account?{' '}
-                                <Link to={`/register?redirect=${redirect}`}>
+                                <Link to={`/register?redirect=${redirect}`}  style={{color:'#0095f6'}}>
                                 Sign up
                                 </Link>     
                         </div>
 
                         <br></br>
                         <div>
-                                <Link to={`/reset/null`}>
+                                <Link to={`/reset/null`}  style={{color:'#0095f6'}}>
                                 Forgot Password ? 
                                 </Link>     
                         </div>

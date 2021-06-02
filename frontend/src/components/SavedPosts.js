@@ -1,7 +1,6 @@
-import React, { useEffect , useState } from 'react';
+import React, {  useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SinglePostJustPic from './SinglePostJustPic'
-import { SocketProvider } from '../chat/contexts/SocketProvider';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { motion } from 'framer-motion';
 import Modal from './Modal'
@@ -14,8 +13,6 @@ export default function SavedPosts() {
         const user = useSelector((state) => state.getDetails.user);
         const [selectedImg, setSelectedImg] = useState(null);
         const [postBy, setpostBy] = useState(null)
-        const dispatch = useDispatch();
-        const history = useHistory()
 
 
 

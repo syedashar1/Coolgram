@@ -33,14 +33,14 @@
   color: white;
   font-weight: bold;
   font-size: 24px;
-  background-color:  #287094;
+  background-color:  #0095f6;
   margin-top: 100px;
 }
 .imgUploadLabel span {
   text-align: center;
 }
 .imgUploadLabel:hover{
-  background: #287094;
+  background: #0095f6;
   color: white;
 }
 .output{
@@ -54,7 +54,7 @@
 /* progress bar styles */
 .progress-bar{
   height: 8px;
-  background: #287094;
+  background: #0095f6;
   margin-top: 20px;
 }
 
@@ -415,9 +415,22 @@ img.medium {
     color: grey;
 }
 
-.form input {
-  background-color: rgb(248, 249, 250);
+.form .desc2 {
+    font-size: 25px;
+    font-weight: 700;
+    color: gray;
+    font-family:  cursive;
 }
+
+.form input {
+  background-color: #fafafa;
+}
+
+.form input:hover {
+  border :'0px'
+}
+
+
 
 .form > div {
   display: flex;
@@ -578,7 +591,7 @@ img.medium {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #2d4155;
+  background: #2a2a2a;
   border-radius: 40px;
 }
 
@@ -789,7 +802,10 @@ img.medium {
   height: 7px !important ;
   border-radius: 50px;
 }
-
+.PrivateTabIndicator-colorPrimary-3{
+  background : #0095f6 !important
+  
+}
 
 button:hover{
   border: 0;
@@ -869,4 +885,11 @@ button:hover{
   100% {
     transform: rotate(360deg);
   }
+}
+
+
+
+
+.Mui-selected{
+  color: #0095f6 !important;
 }

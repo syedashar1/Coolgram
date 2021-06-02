@@ -13,6 +13,7 @@ import NotitificationScreen from './screens/NotitificationScreen';
 import UserProfile from './screens/userProfile';
 import ExploreScreen from './screens/ExploreScreen';
 import ResetScreen from './screens/ResetScreen';
+import AboutScreen from './screens/AboutScreen';
 
 
 class App extends React.Component {
@@ -40,6 +41,7 @@ class App extends React.Component {
                 <Route path="/user/:id" component={UserProfile} exact></Route>
                 <Route path="/chat" component={ChatApp}></Route>
                 <Route path="/reset/:token" component={ResetScreen}></Route>
+                <Route path="/about" component={AboutScreen}></Route>
 
                  
 

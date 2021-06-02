@@ -97,17 +97,12 @@ class Navbar extends Component {
        ) : (
 
         <div className="header__right">
-      <Link to="/signin">
-        <Button className="header__button" variant="outlined" color="primary">
-        Sign In
-        </Button>
-      </Link>
-      <Link to="/register">
-        <Button className="header__button" variant="outlined" color="secondary">
-        Sign Up
-        </Button>
-      </Link>
-    </div>
+
+        <Link to={'/about'} style={{color:'white'}}>
+        About Us
+        </Link>
+
+        </div>
 
        ) }
 

@@ -1,5 +1,5 @@
 import React, { useEffect , useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
@@ -18,7 +18,6 @@ export default function ExploreScreen() {
         const { userInfo } = userSignin;
         const [selectedImg, setSelectedImg] = useState(null);
         const [postBy, setpostBy] = useState(null)
-        const dispatch = useDispatch();
         const history = useHistory()
         const [state ,setState ] = useState([])
         const [page ,setPage ] = useState(1) 

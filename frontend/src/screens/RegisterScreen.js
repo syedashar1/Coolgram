@@ -226,7 +226,8 @@ render() {
                 <label />
                 
                 <div  className='text-center'>
-                        <button type="submit"> Sign Up </button>
+                       <button style={{height :'55px' , borderRadius:'0px' ,backgroundColor:'#0095f6' , color:'white',
+                        border: '1px solid transparent' }} type="submit"> Sign Up </button>
 
                 </div>
                         
@@ -242,7 +243,7 @@ render() {
                 <div> <span>
 
                 Have an account ?{' '}
-                        <Link to={`/signin`}>
+                        <Link to={`/signin`} style={{color:'#0095f6'}}>
                         Sign In
                         </Link> 
                 

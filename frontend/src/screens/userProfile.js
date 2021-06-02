@@ -214,7 +214,12 @@ export default function UserProfile(props) {
                 {!EditState &&
                 <div>
                 {user._id === userInfo._id ? <><UploadForm /></> : 
-                <p className='text-center'><button onClick={()=>setopenModal(true)} >Message</button></p>
+                <p className='text-center'>
+                
+                <button onClick={()=>setopenModal(true)} style={{height :'55px' , borderRadius:'0px' ,backgroundColor:'#0095f6' , color:'white',
+                        border: '1px solid transparent' }} type="submit"> Message </button>
+                
+                </p>
                 }
                 </div>
                 

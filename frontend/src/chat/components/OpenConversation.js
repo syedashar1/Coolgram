@@ -53,10 +53,10 @@ export default function OpenConversation() {
               required
               value={text}
               onChange={e => setText(e.target.value)}
-              style={{ height: '75px', resize: 'none' }}
+              style={{ height: '75px', resize: 'none',fontSize:'25px' }}
             />
             <InputGroup.Append>
-              <Button style={{backgroundColor:'#287094', paddingLeft:'20px' , paddingRight : '20px'}} type="submit">Send</Button>
+              <Button style={{backgroundColor:'#287094', paddingLeft:'20px' , paddingRight : '20px',fontSize:'25px'  }} type="submit">Send</Button>
             </InputGroup.Append>
           </InputGroup>
         </Form.Group>

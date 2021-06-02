@@ -48,14 +48,19 @@ export default function Conversations() {
           <div style={{height:'50px',width:'50px',borderRadius:'50%',overflow:'hidden',textAlign:'center',display:'inline-block'}} >
             <img src={conversation.recipients[0].profilePic}></img>
           </div>
-          <p> {conversation.recipients.map(r => r.name).join(', ')} </p>
+          <p> {conversation.recipients.map(r => r.name).join(', ')} 
 
             {senders && senders.indexOf(conversation.recipients[0].id) != -1 &&
-            Checked.indexOf(conversation.recipients[0].id) == -1 && <p>new</p> }
+            Checked.indexOf(conversation.recipients[0].id) == -1 ? <h3><span className='badge badge-warning' >new</span></h3> :
+            
+            user && user.newMessages && user.newMessages.indexOf(conversation.recipients[0].id) != -1 &&
+            Checked.indexOf(conversation.recipients[0].id) == -1 ? <h3><span className='badge badge-warning' >new</span></h3> : ''
+            
+            }
 
-          
-            {user && user.newMessages && user.newMessages.indexOf(conversation.recipients[0].id) != -1 &&
-             Checked.indexOf(conversation.recipients[0].id) == -1 && <p>new</p> }
+          </p>
+
+
           
           </ListGroup.Item>}</>
         
