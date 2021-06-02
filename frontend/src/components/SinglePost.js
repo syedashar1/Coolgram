@@ -233,19 +233,21 @@ export default function SinglePost({ id , postid , inModal }) {
                 const month = x.split('T')[0].split('-')[1]
                 var setMonth = ''
                 
-                if(month == 1) setMonth = 'Jan'
-                if(month == 2) setMonth = 'Feb'
-                if(month == 3) setMonth = 'Mar'
-                if(month == 4) setMonth = 'Apr'
-                if(month == 5) setMonth = 'May'
-                if(month == 6) setMonth = 'June'
-                if(month == 7) setMonth = 'July'
-                if(month == 8) setMonth = 'Aug'
-                if(month == 9) setMonth = 'Sep'
-                if(month == 10) setMonth = 'Oct'
-                if(month == 11) setMonth = 'Nov'
-                if(month == 12) setMonth = 'Dec'
+                if(month == '01') setMonth = 'Jan'
+                if(month == '02') setMonth = 'Feb'
+                if(month == '03') setMonth = 'Mar'
+                if(month == '04') setMonth = 'Apr'
+                if(month == '05') setMonth = 'May'
+                if(month == '06') setMonth = 'Jun'
+                if(month == '07') setMonth = 'July'
+                if(month == '08') setMonth = 'Aug'
+                if(month == '09') setMonth = 'Sep'
+                if(month == '10') setMonth = 'Oct'
+                if(month == '11') setMonth = 'Nov'
+                if(month == '12') setMonth = 'Dec'
 
+                console.log(setMonth)
+                console.log(CurrentDate.split(' ')[1])
 
                 if(CurrentDate.split(' ')[1] == setMonth && CurrentDate.split(' ')[2]== x.split('T')[0].split('-')[2] )
                         { return 'Today' }
